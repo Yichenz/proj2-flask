@@ -4,6 +4,8 @@ Test program for pre-processing schedule
 import arrow
 
 base = arrow.now()
+now =  arrow.utcnow()
+
 
 def process(raw):
     """
@@ -31,7 +33,8 @@ def process(raw):
 
         if field == "begin":
             try:
-                base = arrow.get(content)
+                base = arrow.get(content,"M/D/YYYY")
+            
             except:
                 raise ValueError("Unable to parse date {}".format(content))
 
@@ -42,6 +45,12 @@ def process(raw):
             entry['topic'] = ""
             entry['project'] = ""
             entry['week'] = content
+            Fday = base.replace(weeks =+ (int(content) -1))
+            entry['next'] = Fday.format("MM/DD/YYYY")
+            Eweek = Fday.replace(days =+6)
+            if Fday <= now and now <= Eweek:
+                entry['now'] = True
+                    
 
         elif field == 'topic' or field == 'project':
             entry[field] = content

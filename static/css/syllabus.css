@@ -20,6 +20,10 @@ table .class-schedule: {
     padding: 3px;
 }
 
+tr.now{
+    background-color: rgb(255,255,0);
+}
+
 tr.odd {
     /* A little darker */
     background-color: rgb(216,202,160);
